@@ -20,7 +20,8 @@ public class MainMenu {
             System.out.println("2. Tambah Produk");
             System.out.println("3. Lihat Daftar");
             System.out.println("4. Hapus Produk");
-            System.out.println("5. Produk Diskon");
+            System.out.println("5. Edit Produk");
+            System.out.println("6. Produk Diskon");
             System.out.println("0. Keluar");
 
             System.out.print("Pilih: ");
@@ -62,6 +63,27 @@ public class MainMenu {
                     break;
 
                 case 5:
+                    System.out.print("Nama produk yang mau diedit: ");
+                    String namaEdit = input.nextLine();
+
+                    Produk produk = gm.cariProduk(namaEdit);
+
+                    if (produk == null) {
+                        System.out.println("Produk tidak ditemukan!");
+                        break;
+                    }
+
+                    System.out.print("Harga baru: ");
+                    int hargaBaru = input.nextInt();
+
+                    System.out.print("Stok baru: ");
+                    int stokBaru = input.nextInt();
+                    input.nextLine();
+
+                    ep.editProduk(gm.getDaftar(), namaEdit, hargaBaru, stokBaru);
+                    break;
+
+                case 6:
                     ProdukDiskon pd = new ProdukDiskon("Laptop", 8000000, 5, 10);
                     pd.tampil();
                     break;
