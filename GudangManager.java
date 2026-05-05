@@ -89,4 +89,7 @@ public class GudangManager {
         }
         return null;
     }
+    public ArrayList<Produk> getDaftar() {
+        return daftar;
+    }
 }
