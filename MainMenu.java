@@ -51,6 +51,7 @@ public class MainMenu {
                     break;
 
                 case 3:
+                    gm.sortHarga();
                     gm.tampilSemua();
                     break;
 
