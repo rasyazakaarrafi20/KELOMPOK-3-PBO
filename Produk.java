@@ -15,6 +15,13 @@ public class Produk extends Item {
         System.out.println(nama + " | Rp." + harga + " | Stok: " + stok);
     }
     public int getStok() {
-    return stok;
-}
+        return stok;
+    }
+    
+    public void setingHarga(int harga) {
+    this.harga = harga;
+    }
+    public void setingStok(int stok) {
+    this.stok = stok;
+    }
 }
