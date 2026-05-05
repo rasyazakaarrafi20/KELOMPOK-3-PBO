@@ -64,20 +64,27 @@ public class GudangManager {
         }
     }
 
-    // SORTING
+    //  BUBBLE SORT (HARGA)
     public void sortHarga() {
-        daftar.sort((a, b) -> a.getHarga() - b.getHarga());
-    }
+        for (int i = 0; i < daftar.size() - 1; i++) {
+            for (int j = 0; j < daftar.size() - 1 - i; j++) {
 
-    public void sortNama() {
-        daftar.sort((a, b) -> a.getNama().compareToIgnoreCase(b.getNama()));
-    }
+                if (daftar.get(j).getHarga() > daftar.get(j + 1).getHarga()) {
 
-    // SEARCH
+                    // swap
+                    Produk temp = daftar.get(j);
+                    daftar.set(j, daftar.get(j + 1));
+                    daftar.set(j + 1, temp);
+                }
+            }
+        }
+    }
+    //  LINEAR SEARCH (NAMA)
     public Produk cariNama(String nama) {
-        for (Produk p : daftar) {
-            if (p.getNama().equalsIgnoreCase(nama)) {
-                return p;
+        for (int i = 0; i < daftar.size(); i++) {
+
+            if (daftar.get(i).getNama().equalsIgnoreCase(nama)) {
+                return daftar.get(i);
             }
         }
         return null;
