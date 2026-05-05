@@ -1,14 +1,89 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //Class Identitas
-class Identitas {
+class about {
     static void tampil() {
-        System.out.println("\n");
-        System.out.println("Nama      : Jois Miranda Agunning Putri");
-        System.out.println("NIM/Kelas : 25051204427/Teknik Informatika 2025 I");
-        System.out.println("\n");
+        System.out.println("Nama  : Kelompok PB)");
+        System.out.println("Kelas : Teknik Informatika 2025 I");
     }
 }
+
+class Menu {
+
+    static ArrayList<String> daftarProduk = new ArrayList<>();
+
+    static void tampilMenu(){
+        System.out.println("=== Menejement Produk ===");
+        System.out.println("1. Home");
+        System.out.println("2. Tambah Produk");
+        System.out.println("3. Lihat Daftar");
+        System.out.println("4. Hapus Produk");
+        System.out.println("5. Produk Diskon");
+        System.out.println("6. About");
+    }
+
+    static void tambahProduk(Scanner inputScanner){
+        System.out.print("Masukkan nama produk: ");
+        inputScanner.nextLine(); 
+        String nama = inputScanner.nextLine();
+
+        daftarProduk.add(nama); 
+        System.out.println("Produk berhasil ditambahkan!");
+    }
+
+
+    static void lihatDaftar(){
+        System.out.println("=== Daftar Produk ===");
+
+        if (daftarProduk.isEmpty()) {
+            System.out.println("Belum ada produk");
+        } else {
+            for (int i = 0; i < daftarProduk.size(); i++) {
+                System.out.println((i+1) + ". " + daftarProduk.get(i));
+            }
+        }
+    } 
+
+    static void jalankanMenu(){
+        Scanner input = new Scanner(System.in);
+        int pilihan;
+
+        do {
+            tampilMenu();
+            System.out.print("Pilih Menu : ");
+            pilihan = input.nextInt();
+         
+            switch (pilihan) {
+                case 1:
+                    System.out.println("=> menu home");
+                    break;
+                case 2:
+                    tambahProduk(input);
+                    break;
+                case 3:
+                    lihatDaftar();
+                    break;
+                case 4:
+                    System.out.println("=> menu hapus produk");
+                    break;
+                case 5:
+                    System.out.println("=> menu produk diskon");
+                    break;
+                case 6:
+                    about.tampil ();
+                    break;
+            
+                default:
+                    System.out.println("Keluar");
+                    break;
+            } 
+        } while (pilihan != 0);
+    }     
+}
+
+// yang atas rombakan yang bawah belum di otak atik
+
 //Parent Class (Enskapsulasi)
 class Item {
     String nama;
@@ -132,9 +207,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
-        // Menampilkan identitas
-        Identitas.tampil ();
+        Menu.jalankanMenu();
 
         Scanner input = new Scanner(System.in);
 
