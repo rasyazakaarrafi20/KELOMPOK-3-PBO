@@ -1,0 +1,318 @@
+.root {
+
+    -fx-font-family: "Poppins";
+
+    -fx-background-color: #2F2FE4;
+}
+
+.main-background {
+
+    -fx-background-color: #2F2FE4;
+}
+
+.sidebar {
+
+    -fx-background-color: #1A1953;
+
+    -fx-padding: 30;
+}
+
+.logo-text {
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 25px;
+
+    -fx-font-weight: bold;
+}
+
+.sidebar-button {
+
+    -fx-background-color: #2636b5;
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 14px;
+
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 15;
+
+    -fx-cursor: hand;
+}
+
+.sidebar-button:hover {
+
+    -fx-background-color: #4b5cff;
+}
+
+.sidebar-button-active {
+
+    -fx-background-color: #5a6bff;
+}
+
+.topbar {
+
+    -fx-background-color: #05051e;
+}
+
+.topbar-text {
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 16px;
+
+    -fx-font-weight: bold;
+}
+
+.kelompok-text {
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 16px;
+
+    -fx-font-weight: bold;
+}
+
+.dashboard-card {
+
+    -fx-background-color: rgba(255,255,255,0.20);
+
+    -fx-background-radius: 20;
+
+    -fx-border-color: rgba(255,255,255,0.3);
+
+    -fx-border-radius: 20;
+
+    -fx-padding: 20;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.15),
+        15,
+        0,
+        0,
+        5
+    );
+}
+
+.card-title {
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 18px;
+
+    -fx-font-weight: bold;
+}
+
+.card-value {
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 30px;
+
+    -fx-font-weight: bold;
+}
+
+.search-field {
+
+    -fx-pref-height: 45;
+
+    -fx-background-radius: 15;
+
+    -fx-font-size: 14px;
+
+    -fx-padding: 0 15 0 15;
+
+    -fx-background-color: white;
+}
+
+.action-button {
+
+    -fx-background-color: black;
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 13px;
+
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 12;
+
+    -fx-padding: 10 18;
+
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+
+    -fx-background-color: #2d2d2d;
+}
+
+.section-title {
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 26px;
+
+    -fx-font-weight: bold;
+}
+
+.diskon-box {
+
+    -fx-background-color: #2436a3;
+
+    -fx-background-radius: 20;
+
+    -fx-border-color: rgba(212, 210, 210, 0.2);
+
+    -fx-border-radius: 20;
+
+    -fx-padding: 20;
+}
+
+.table-view {
+
+    -fx-background-radius: 15;
+
+    -fx-border-radius: 15;
+
+    -fx-background-color: white;
+}
+
+/* HEADER TABLE */
+
+.table-view .column-header {
+
+    -fx-background-color: #2636b5;
+}
+
+/* TEXT HEADER */
+
+.table-view .column-header .label {
+
+    -fx-text-fill: white;
+
+    -fx-font-weight: bold;
+}
+
+/* =========================
+   TEXT FIELD
+========================= */
+
+.text-field {
+
+    -fx-background-radius: 12;
+
+    -fx-border-radius: 12;
+
+    -fx-padding: 10;
+}
+
+/* =========================
+   COMBO BOX
+========================= */
+
+.combo-box {
+
+    -fx-background-radius: 12;
+
+    -fx-border-radius: 12;
+}
+
+/* =========================
+   LABEL UMUM
+========================= */
+
+.label {
+
+    -fx-text-fill: white;
+}
+
+/* Tambah Produk View */
+/* FORM CONTAINER */
+
+.form-container {
+
+    -fx-background-color: #2436a3;
+
+    -fx-background-radius: 25;
+
+    -fx-border-color: black;
+
+    -fx-border-radius: 25;
+
+    -fx-padding: 40;
+}
+
+/* TITLE */
+
+.form-title {
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 32px;
+
+    -fx-font-weight: bold;
+}
+
+/* LABEL */
+
+.input-label {
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 18px;
+
+    -fx-font-weight: bold;
+}
+
+/* INPUT */
+
+.custom-field {
+
+    -fx-pref-height: 50;
+
+    -fx-background-radius: 12;
+
+    -fx-font-size: 15px;
+
+    -fx-background-color: #d9d9d9;
+
+    -fx-text-fill: black;
+}
+
+/* BUTTON SIMPAN */
+
+.btn-simpan {
+
+    -fx-background-color: #43d854;
+
+    -fx-text-fill: black;
+
+    -fx-font-size: 15px;
+
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 10;
+
+    -fx-cursor: hand;
+}
+
+/* BUTTON BATAL */
+
+.btn-batal {
+
+    -fx-background-color: red;
+
+    -fx-text-fill: black;
+
+    -fx-font-size: 15px;
+
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 10;
+
+    -fx-cursor: hand;
+} 
+
