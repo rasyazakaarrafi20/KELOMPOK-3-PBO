@@ -1,18 +1,22 @@
 package manajemenProduk.view;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Region;
+
 import manajemenProduk.model.Produk;
+import manajemenProduk.services.DatabaseConfig;
 import manajemenProduk.services.GudangManager;
 
 public class HomeView {
@@ -53,7 +57,7 @@ public class HomeView {
         HBox.setHgrow(spacer,Priority.ALWAYS);
         
         // KANAN
-        Label kelompok = new Label("KELOMPOK 3");
+        Label kelompok = new Label("KELOMPOK 3 👤");
         
         kelompok.getStyleClass().add("kelompok-text");
         
@@ -79,33 +83,103 @@ public class HomeView {
         );
 
         // TOTAL PRODUK
+        int totalProduk = 0;
+
+        try {
+
+            Connection conn =
+                DatabaseConfig.getConnection();
+
+            String sql =
+                "SELECT COUNT(*) FROM produk";
+
+            PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+            ResultSet rs =
+                ps.executeQuery();
+
+            if (rs.next()) {
+
+                totalProduk =
+                    rs.getInt(1);
+            }
+
+            conn.close();
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
         VBox cardProduk = createCard(
             "Total Produk",
-            String.valueOf(
-                gm.totalProduk()
-            )
+            String.valueOf(totalProduk)
         );
 
         // TOTAL STOK
+        int totalStok = 0;
+
+        try {
+
+            Connection conn =
+                DatabaseConfig.getConnection();
+
+            String sql =
+                "SELECT SUM(stok) FROM produk";
+
+            PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+            ResultSet rs =
+                ps.executeQuery();
+
+            if (rs.next()) {
+
+                totalStok =
+                    rs.getInt(1);
+            }
+
+            conn.close();
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
         VBox cardStok = createCard(
             "Total Stok",
-            String.valueOf(
-                gm.totalStok()
-            )
+            String.valueOf(totalStok)
         );
 
         // PRODUK BARU
         String produkBaru = "-";
 
-        if (!gm.getDaftar().isEmpty()) {
+        try {
 
-            Produk p =
-                gm.getDaftar().get(
-                    gm.getDaftar().size() - 1
-                );
+            Connection conn =
+                DatabaseConfig.getConnection();
 
-            produkBaru =
-                p.getNama();
+            String sql =
+                "SELECT nama FROM produk ORDER BY id DESC LIMIT 1";
+
+            PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+            ResultSet rs =
+                ps.executeQuery();
+
+            if (rs.next()) {
+
+                produkBaru =
+                    rs.getString("nama");
+            }
+
+            conn.close();
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
         }
 
         VBox cardBaru = createCard(
@@ -146,30 +220,39 @@ public class HomeView {
         searchField.textProperty().addListener(
             (observable, oldValue, newValue) -> {
 
-                hasilSearchBox
-                    .getChildren()
-                    .clear();
+                hasilSearchBox.getChildren().clear();
 
                 if (!newValue.isEmpty()) {
 
-                    for (Produk p : gm.getDaftar()) {
+                    try {
 
-                        if (
-                            p.getNama()
-                            .toLowerCase()
-                            .contains(
-                                newValue.toLowerCase()
-                            )
-                        ) {
+                        Connection conn =
+                            DatabaseConfig.getConnection();
+
+                        String sql =
+                            "SELECT * FROM produk WHERE LOWER(nama) LIKE ?";
+
+                        PreparedStatement ps =
+                            conn.prepareStatement(sql);
+
+                        ps.setString(
+                            1,
+                            "%" + newValue.toLowerCase() + "%"
+                        );
+
+                        ResultSet rs =
+                            ps.executeQuery();
+
+                        while (rs.next()) {
 
                             Label hasil =
                                 new Label(
 
-                                    p.getNama() +
+                                    rs.getString("nama") +
 
                                     " | Rp." +
 
-                                    p.getHarga()
+                                    rs.getInt("harga")
                                 );
 
                             hasil.getStyleClass().add(
@@ -180,6 +263,12 @@ public class HomeView {
                                 .getChildren()
                                 .add(hasil);
                         }
+
+                        conn.close();
+
+                    } catch (Exception ex) {
+
+                        ex.printStackTrace();
                     }
                 }
             }
@@ -192,7 +281,7 @@ public class HomeView {
         topAction.setAlignment(Pos.CENTER_LEFT);
         
         // BUTTON
-        Button btnLihat = new Button("Lihat Produk");
+        Button btnLihat = new Button("Daftar Produk");
         Button btnTambah = new Button("Tambah Produk");
         
         btnLihat.getStyleClass().add("action-button");
@@ -204,24 +293,24 @@ public class HomeView {
         
         searchSection.setMaxWidth(Double.MAX_VALUE);searchSection.setAlignment(Pos.CENTER_LEFT);
 
-searchSection.getChildren().addAll(
-    searchField,
-    hasilSearchBox
-);
+        searchSection.getChildren().addAll(
+            searchField,
+            hasilSearchBox
+        );
 
-// MASUKKAN KE TOPACTION
-topAction.getChildren().addAll(
-    searchSection,
-    btnLihat,
-    btnTambah
-);
+        // MASUKKAN KE TOPACTION
+        topAction.getChildren().addAll(
+            searchSection,
+            btnLihat,
+            btnTambah
+        );
         
         // BUTTON ACTION
         // PINDAH KE DAFTAR PRODUK
         btnLihat.setOnAction(e -> {
 
             DaftarProdukView daftar =
-                new DaftarProdukView(gm);
+                new DaftarProdukView(gm, root);
 
             root.setCenter(
                 daftar.getView()
@@ -261,29 +350,49 @@ topAction.getChildren().addAll(
         );
 
         // TAMPILKAN PRODUK DISKON
-        for (Produk p : gm.getProdukDiskon()) {
+        try {
+            Connection conn =
+                DatabaseConfig.getConnection();
 
-            Label produkDiskon =
-                new Label(
+            String sql =
+                "SELECT * FROM produk WHERE diskon > 0";
 
-                    p.getNama() +
+            PreparedStatement ps =
+                conn.prepareStatement(sql);
 
-                    " | Harga: Rp." +
+            ResultSet rs =
+                ps.executeQuery();
 
-                    p.getHarga() +
+            while (rs.next()) {
 
-                    " | Diskon: " +
+                Label produkDiskon =
+                    new Label(
 
-                    p.getDiskon() + "%"
+                        rs.getString("nama") +
+
+                        " | Harga: Rp." +
+
+                        rs.getInt("harga") +
+
+                        " | Diskon: " +
+
+                        rs.getInt("diskon") + "%"
+                    );
+
+                produkDiskon.getStyleClass().add(
+                    "diskon-item"
                 );
 
-            produkDiskon.getStyleClass().add(
-                "diskon-item"
-            );
+                diskonBox.getChildren().add(
+                    produkDiskon
+                );
+            }
 
-            diskonBox.getChildren().add(
-                produkDiskon
-            );
+            conn.close();
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
         }
 
         // =========================
